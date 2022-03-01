@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header v-if="false" elevated>
+    <q-header class="bg-transparent">
       <q-toolbar>
         <q-btn
           flat
@@ -8,16 +8,19 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title> Pomodoro timer </q-toolbar-title>
       </q-toolbar>
     </q-header>
+
+    <q-drawer dark v-model="leftDrawerOpen" show-if-above>
+      <q-list>
+        <SelectAlarmSound />
+        <TimerConfig />
+      </q-list>
+    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -25,16 +28,14 @@
   </q-layout>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+import SelectAlarmSound from 'components/SelectAlarmSound.vue';
+import TimerConfig from 'components/TimerConfig.vue';
 
-import { defineComponent } from 'vue'
-import { useQuasar } from 'quasar'
+const leftDrawerOpen = ref<boolean>(false);
 
-export default defineComponent({
-  name: 'MainLayout',
-  setup () {
-    const $q = useQuasar()
-    $q.dark.set(true) // or false or "auto"
-  }
-})
+const $q = useQuasar();
+$q.dark.set(true); // or false or "auto"
 </script>
