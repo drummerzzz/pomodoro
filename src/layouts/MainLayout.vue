@@ -10,8 +10,10 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-
-        <q-toolbar-title> Pomodoro timer </q-toolbar-title>
+        <q-toolbar-title>
+          <q-img src="/icons/favicon-128x128.png" width="3rem" />
+          Pomodoro timer
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
