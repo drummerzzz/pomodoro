@@ -18,7 +18,12 @@
               :icon="!isStarted ? 'mdi-play' : 'pause'"
               :label="!isStarted ? 'Iniciar' : 'Pausar'"
               :color="!isStarted ? 'blue-9' : 'cyan'"
-              @click="startTimer"
+              @click="
+                () => {
+                  currentDateTime = new Date();
+                  startTimer();
+                }
+              "
             />
             <q-btn
               size="lg"
@@ -26,7 +31,12 @@
               :disable="!isStarted"
               label="Parar"
               color="grey-10"
-              @click="resetTimer"
+              @click="
+                () => {
+                  currentDateTime = null;
+                  resetTimer();
+                }
+              "
             />
 
             <div class="col-12 text-white text-weight-bold text-center q-mt-md">
@@ -47,6 +57,12 @@
           <b>{{ isWorkTimer ? 'Trabalho' : 'Descanso' }}</b>
         </div>
       </div>
+      <div v-show="currentDateTime" class="row justify-center">
+        <div class="text-center text-weight-bold text-white">
+          <br />
+          Iniciado em {{ currentDateTime }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +70,9 @@
 <script setup lang="ts">
 import { pomodoroTimer } from 'src/controllers/pomodoroTimer';
 import Alarm from 'components/Alarm.vue';
+import { ref } from 'vue';
+
+const currentDateTime = ref<Date | null>(null);
 
 const {
   startAlarm,
